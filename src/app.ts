@@ -9,7 +9,7 @@ import pharmacyRoute from "./routes/pharmacyRoute";
 import path from "path";
 import { db } from "./config/index";
 import professionalRoute from "./routes/professionalRoute";
-import smsRouter from "./routes/smsRoute";
+import smsRouter from "./routes/SmsRoute";
 // Sequelize connection
 db.sync({ force: true })
   .then(() => {
