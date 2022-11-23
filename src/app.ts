@@ -11,7 +11,7 @@ import { db } from "./config/index";
 import professionalRoute from "./routes/professionalRoute";
 import smsRouter from "./routes/SmsRoute";
 // Sequelize connection
-db.sync({ force: true })
+db.sync()
   .then(() => {
     console.log("Db connected successfuly");
   })
