@@ -9,9 +9,9 @@ import pharmacyRoute from "./routes/pharmacyRoute";
 import path from "path";
 import { db } from "./config/index";
 import professionalRoute from "./routes/professionalRoute";
-import smsRouter from './routes/smsRoute'
+import smsRouter from "./routes/smsRoute";
 // Sequelize connection
-db.sync({force:true})
+db.sync({ force: true })
   .then(() => {
     console.log("Db connected successfuly");
   })
@@ -28,7 +28,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.set("view engine", "ejs");
 
 //Router middleware
-app.use('/sms',smsRouter)
+app.use("/sms", smsRouter);
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 // app.use("/admins", adminRouter);
@@ -39,9 +39,8 @@ app.use("/pharmacy", pharmacyRoute);
 
 app.use("/pro", professionalRoute);
 
-const port = 4000;
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
 
 export default app;
