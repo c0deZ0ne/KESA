@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Account-Register</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=0"
+    />
+
+    <link href="/assets/img/favicon.png" rel="icon" />
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="/assets/plugins/fontawesome/css/fontawesome.min.css"
+    />
+    <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/feather.css" />
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body class="account-page">
+    <%- include('patial/header') %>
+    <div class="main-wrapper">
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div class="account-content">
+                <div class="row align-items-center justify-content-center">
+                  <div class="col-md-7 col-lg-6 login-left">
+                    <img
+                      src="/assets/img/login-banner.png"
+                      class="img-fluid"
+                      alt="Login Banner"
+                    />
+                  </div>
+                  <div class="col-md-12 col-lg-6 login-right">
+                    <div class="login-header">
+                      <h3 style="color: grey">Register Account</h3>
+                    </div>
+
+                    <form class="reg-form">
+                      <div class="form-group form-focus">
+                        <input
+                          onkeyup="handleChange(this)"
+                          name="fullname"
+                          type="text"
+                          class="form-control floating"
+                        />
+                        <label class="focus-label">fullname</label>
+                      </div>
+                      <div class="form-group form-focus">
+                        <input
+                          onkeyup="handleChange(this)"
+                          name="phone"
+                          type="text"
+                          class="form-control floating"
+                        />
+                        <label class="focus-label">Mobile Number</label>
+                      </div>
+                      <div class="form-group form-focus">
+                        <input
+                          onkeyup="handleChange(this)"
+                          name="email"
+                          type="email"
+                          class="form-control floating"
+                        />
+                        <label class="focus-label">Your Email Address</label>
+                      </div>
+                      <div class="form-group form-focus">
+                        <input
+                          onkeyup="handleChange(this)"
+                          name="password"
+                          type="password"
+                          class="form-control floating"
+                        />
+                        <label class="focus-label">Enter Password</label>
+                      </div>
+                      <div class="form-group form-focus">
+                        <input
+                          onkeyup="handleChange(this)"
+                          name="confirm_password"
+                          type="password"
+                          class="form-control floating"
+                        />
+                        <label class="focus-label">Confrim Password</label>
+                      </div>
+                      <div class="row">
+                        <div class="form-group">
+                          <div class="input-with-icon">
+                            <select
+                              onchange="handleChange(this)"
+                              name="accountType"
+                              class="form-control floating"
+                              style="color: grey"
+                            >
+                              <option>Patient</option>
+                              <option>Professionals</option>
+                              <option>others</option>
+                            </select>
+                            <i class="ti-briefcase"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-end">
+                        <a class="forgot-link" href="login"
+                          >Already have an account?</a
+                        >
+                      </div>
+                      <button
+                        class="btn btn-primary w-100 btn-lg login-btn"
+                        type="submit"
+                      >
+                        Signup
+                      </button>
+                      <div class="login-or">
+                        <span class="or-line"></span>
+                        <span class="span-or">or</span>
+                      </div>
+                      <div class="row form-row social-login">
+                        <div class="col-6">
+                          <a href="/" class="btn btn-facebook w-100"
+                            ><i class="fab fa-facebook-f me-1"></i> Login</a
+                          >
+                        </div>
+                        <div class="col-6">
+                          <a href="/login" class="btn btn-google w-100"
+                            ><i class="fab fa-google me-1"></i> Login</a
+                          >
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- footer -->
+      <%- include('patial/footer') %>
+    </div>
+
+    <script
+      data-cfasync="false"
+      src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/feather.min.js"></script>
+
+    <script src="/assets/js/script.js"></script>
+
+    <script src="/script/index.js"></script>
+  </body>
+</html>
