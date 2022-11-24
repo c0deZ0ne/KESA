@@ -46,13 +46,10 @@ export const smsManager = async (req: Request, res: Response) => {
           `;
           res.send(status);
         } else {
-          const status = `END
-          You are not registered
-          `;
+          const status = `END You are not registered`;
           res.send(status);
         }
       } catch (error) {
-        
         console.log(error);
       }
     } else if (text == "3") {

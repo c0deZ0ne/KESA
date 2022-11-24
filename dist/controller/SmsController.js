@@ -50,9 +50,7 @@ const smsManager = async (req, res) => {
                     res.send(status);
                 }
                 else {
-                    const status = `END
-          You are not registered
-          `;
+                    const status = `END You are not registered`;
                     res.send(status);
                 }
             }
