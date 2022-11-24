@@ -40,8 +40,7 @@ const smsManager = async (req, res) => {
                     where: { phone: phoneNumber },
                 });
                 if (user) {
-                    const status = `END
-          Your account details are
+                    const status = `END Your account details are
           Name: ${user.fullname}
           Location: ${user.address}
           Phone: ${user.phone}
