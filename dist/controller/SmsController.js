@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.smsManager = void 0;
 const axios_1 = __importDefault(require("axios"));
 const utils_1 = require("../utils");
+const userModel_1 = require("../model/userModel");
 const smsManager = async (req, res) => {
     var response;
     try {
@@ -34,14 +35,29 @@ const smsManager = async (req, res) => {
             res.send(response);
         }
         else if (text == "2") {
-            // Business logic for first level response
-            const status = `END
-          your account details
-          name: abc
-          location: xyz
-          confirmed: true
-        `;
-            res.send(status);
+            try {
+                const user = await userModel_1.UserInstance.findOne({
+                    where: { phone: phoneNumber },
+                });
+                if (user) {
+                    const status = `END
+          Your account details are
+          Name: ${user.fullname}
+          Location: ${user.address}
+          Phone: ${user.phone}
+          `;
+                    res.send(status);
+                }
+                else {
+                    const status = `END
+          You are not registered
+          `;
+                    res.send(status);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
         else if (text == "3") {
             // Business logic for first level response

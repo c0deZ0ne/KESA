@@ -1,6 +1,7 @@
 import express, { Request, response, Response } from "express";
 import axios from "axios";
 import { GenerateOTP } from "../utils";
+import { UserInstance } from "../model/userModel";
 
 export const smsManager = async (req: Request, res: Response) => {
   var response;
@@ -31,14 +32,27 @@ export const smsManager = async (req: Request, res: Response) => {
         `;
       res.send(response);
     } else if (text == "2") {
-      // Business logic for first level response
-      const status = `END
-          your account details
-          name: abc
-          location: xyz
-          confirmed: true
-        `;
-      res.send(status);
+      try {
+        const user: any = await UserInstance.findOne({
+          where: { phone: phoneNumber },
+        });
+        if (user) {
+          const status = `END
+          Your account details are
+          Name: ${user.fullname}
+          Location: ${user.address}
+          Phone: ${user.phone}
+          `;
+          res.send(status);
+        } else {
+          const status = `END
+          You are not registered
+          `;
+          res.send(status);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else if (text == "3") {
       // Business logic for first level response
       // This is a terminal request. Note how we start the response with END
