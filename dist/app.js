@@ -16,7 +16,7 @@ const index_2 = require("./config/index");
 const professionalRoute_1 = __importDefault(require("./routes/professionalRoute"));
 const SmsRoute_1 = __importDefault(require("./routes/SmsRoute"));
 // Sequelize connection
-index_2.db.sync()
+index_2.db.sync({ force: true })
     .then(() => {
     console.log("Db connected successfuly");
 })

@@ -11,7 +11,7 @@ import { db } from "./config/index";
 import professionalRoute from "./routes/professionalRoute";
 import smsRouter from "./routes/SmsRoute";
 // Sequelize connection
-db.sync()
+db.sync({ force: true })
   .then(() => {
     console.log("Db connected successfuly");
   })
@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json())
+app.use(express.json());
 app.use(express.static(path.join(process.cwd(), "public")));
 app.set("view engine", "ejs");
 

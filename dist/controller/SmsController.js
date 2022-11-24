@@ -10,6 +10,7 @@ const smsManager = async (req, res) => {
     try {
         res.set("Content-Type: text/plain");
         let { sessionId, serviceCode, phoneNumber, text } = req.body;
+        console.log(req.body);
         console.log(text, sessionId, serviceCode, phoneNumber);
         let entry = `CON Welcome to the KESA SMS service
     1. Register Account
@@ -76,13 +77,14 @@ const smsManager = async (req, res) => {
                     accountType: "user",
                     phone: phoneNumber,
                 };
-                console.log(req.path);
-                const regData = await axios_1.default.post(`${process.env.base_url}/users/signup`, user);
-                // console.log(regData.data);
-                // This is a second level response where the user selected 1 in the first instance
-                const status = `${name} Account Created Sucessfully`;
-                // This is a terminal request. Note how we start the response with END
-                res.send(`END 
+                // console.log(req.path);
+                const regData = await axios_1.default.post(`${process.env.BASE_URL}/users/signup`, user);
+                const { code, message } = regData?.data;
+                if (code == 201) {
+                    // This is a second level response where the user selected 1 in the first instance
+                    const status = `${name} Account Created Sucessfully`;
+                    // This is a terminal request. Note how we start the response with END
+                    res.send(`END 
           ${status}
             please wait for a professional to contact you or 
             login to your account to request for a professional
@@ -90,18 +92,27 @@ const smsManager = async (req, res) => {
             username: ${name}
             password: ${phoneNumber}
           `);
-            }
-            catch (error) {
-                // console.log(error);
-                const { Error } = error.response.data;
-                if (Error == "User already exist") {
+                }
+                else {
                     res.send(`END 
-             Account already created
+            ${message}
             `);
                 }
-                res.send(`END
-           An error occured
-          `);
+            }
+            catch (error) {
+                console.log(error);
+                const { Error } = error?.response?.data;
+                if (Error == "User already exist") {
+                    response = `END 
+             Account already created
+            `;
+                }
+                else {
+                    response = `END 
+             ${Error}
+            `;
+                }
+                res.send(response);
             }
         }
         else if (text == "3*1") {
