@@ -16,14 +16,14 @@ const smsManager = async (req, res) => {
         let response = entry;
         if (req.method === "POST") {
             var pattern = /^[1][\*]([\a-z\s]){2,}\s\+\s([\a-z\s\w]){2,}?$/gim;
-            console.log(req.body);
             //manager registration
             const { sessionId, serviceCode, phoneNumber, text } = req.body;
             console.log(text);
             let response = entry;
+            res.send(response);
             if (text == "") {
                 // This is the first request. Note how we start the response with CON
-                return res.send(response);
+                res.send(response);
             }
             else if (text == "1") {
                 // Business logic for first level response

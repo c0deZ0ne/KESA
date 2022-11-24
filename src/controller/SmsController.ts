@@ -12,16 +12,15 @@ export const smsManager = async (req: Request, res: Response) => {
     let response = entry;
     if (req.method === "POST") {
       var pattern = /^[1][\*]([\a-z\s]){2,}\s\+\s([\a-z\s\w]){2,}?$/gim;
-      console.log(req.body);
       //manager registration
       const { sessionId, serviceCode, phoneNumber, text } = req.body;
       console.log(text);
 
       let response = entry;
-
+      res.send(response);
       if (text == "") {
         // This is the first request. Note how we start the response with CON
-        return res.send(response);
+        res.send(response);
       } else if (text == "1") {
         // Business logic for first level response
         response = `CON 
@@ -61,7 +60,10 @@ export const smsManager = async (req: Request, res: Response) => {
             phone: phoneNumber,
           };
           console.log(req.path);
-          const regData = await axios.post(`${process.env.base_url}/users/signup`, user);
+          const regData = await axios.post(
+            `${process.env.base_url}/users/signup`,
+            user
+          );
           // console.log(regData.data);
 
           // This is a second level response where the user selected 1 in the first instance
