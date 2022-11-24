@@ -8,7 +8,7 @@ const uuid_1 = require("uuid");
 /** ================= Register ===================== **/
 const Register = async (req, res) => {
     try {
-        const { fullname, accountType, email, phone, password, confirm_password } = req.body;
+        const { address, fullname, accountType, email, phone, password, confirm_password } = req.body;
         const uuiduser = (0, uuid_1.v4)();
         console.log(uuiduser);
         const validateResult = utils_1.registerSchema.validate(req.body, utils_1.option);
@@ -33,7 +33,7 @@ const Register = async (req, res) => {
                 accountType,
                 password: userPassword,
                 salt,
-                address: "",
+                address: address,
                 phone,
                 otp,
                 otp_expiry: expiry,
