@@ -60,10 +60,8 @@ export const smsManager = async (req: Request, res: Response) => {
             accountType: "user",
             phone: phoneNumber,
           };
-          const regData = await axios.post(
-            "http://localhost:8080/users/signup",
-            user
-          );
+          console.log(req.path);
+          const regData = await axios.post(`${process.env.base_url}/users/signup`, user);
           // console.log(regData.data);
 
           // This is a second level response where the user selected 1 in the first instance

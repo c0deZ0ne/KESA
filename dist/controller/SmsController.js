@@ -66,7 +66,8 @@ const smsManager = async (req, res) => {
                         accountType: "user",
                         phone: phoneNumber,
                     };
-                    const regData = await axios_1.default.post("http://localhost:8080/users/signup", user);
+                    console.log(req.path);
+                    const regData = await axios_1.default.post(`${process.env.base_url}/users/signup`, user);
                     // console.log(regData.data);
                     // This is a second level response where the user selected 1 in the first instance
                     const status = `${name} Account Created Sucessfully`;
