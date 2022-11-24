@@ -32,13 +32,13 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(response);
     } else if (text == "2") {
       // Business logic for first level response
-      response = `END
+      const status = `END
           your account details
           name: abc
           location: xyz
           confirmed: true
         `;
-      res.send(response);
+      res.send(status);
     } else if (text == "3") {
       // Business logic for first level response
       // This is a terminal request. Note how we start the response with END
@@ -52,12 +52,8 @@ export const smsManager = async (req: Request, res: Response) => {
         `;
       res.send(response);
     } else if (text == "4") {
-      // Business logic for first level response
-      // This is a terminal request. Note how we start the response with END
-      response = `END
-        Thank you for using KESA SMS service
-        `;
-      res.send(response);
+      const status = `END Thank you for using KESA SMS service`;
+      res.send(status);
     } else if (text.match(pattern)) {
       try {
         let userData = text.split("*")[1].split("+");
@@ -161,17 +157,6 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "4") {
-      response = `END 
-        Thank you for using KESA
-        `;
-
-      console.log(text);
-      response = `END Invalid Input`;
-
-      // Send the response back to the API
-
-      res.send(response);
     }
   } catch (error) {
     console.log(error);
