@@ -34,10 +34,10 @@ export const smsManager = async (req: Request, res: Response) => {
     } else if (text == "2") {
       try {
         res.send("CON Wait while we fetch your details");
+
         const user: any = await UserInstance.findOne({
           where: { phone: phoneNumber },
         });
-        res.send("CON Wait while we fetch your details");
         if (user) {
           const status = `END Your account details are
           Name: ${user.fullname}

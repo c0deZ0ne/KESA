@@ -40,7 +40,6 @@ const smsManager = async (req, res) => {
                 const user = await userModel_1.UserInstance.findOne({
                     where: { phone: phoneNumber },
                 });
-                res.send("CON Wait while we fetch your details");
                 if (user) {
                     const status = `END Your account details are
           Name: ${user.fullname}
