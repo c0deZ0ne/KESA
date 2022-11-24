@@ -72,9 +72,9 @@ const smsManager = async (req, res) => {
                 let { otp } = await (0, utils_1.GenerateOTP)();
                 let user = {
                     email: `${phoneNumber}@kesapp.com`,
-                    password: otp,
+                    password: String(otp),
                     fullname: name,
-                    confirm_password: otp,
+                    confirm_password: String(otp),
                     address: location,
                     accountType: "user",
                     phone: phoneNumber,
