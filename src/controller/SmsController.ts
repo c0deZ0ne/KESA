@@ -62,6 +62,7 @@ export const smsManager = async (req: Request, res: Response) => {
         let userData = text.split("*")[1].split("+");
         let name = userData[0];
         let location = userData[1];
+        phoneNumber = phoneNumber.replace("+254", "0");
         let user = {
           email: `${phoneNumber}@kesapp.com`,
           password: phoneNumber,
