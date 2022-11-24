@@ -3,9 +3,10 @@ import axios from "axios";
 
 export const smsManager = async (req: Request, res: Response) => {
   var response;
+
   try {
     res.set("Content-Type: text/plain");
-    const { sessionId, serviceCode, phoneNumber, text } = req.body;
+    let { sessionId, serviceCode, phoneNumber, text } = req.body;
     console.log(text, sessionId, serviceCode, phoneNumber);
 
     let entry = `CON Welcome to the KESA SMS service
@@ -18,7 +19,7 @@ export const smsManager = async (req: Request, res: Response) => {
     var pattern = /^[1][\*]([\a-z\s]){2,}\s\+\s([\a-z\s\w]){2,}?$/gim;
     //manager registration
 
-    if (text == "") {
+    if (text == null || text == "" || text == undefined) {
       // This is the first request. Note how we start the response with CON
       res.send(response);
     } else if (text == "1") {
