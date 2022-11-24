@@ -2,6 +2,9 @@ import express, { Request, response, Response } from "express";
 import axios from "axios";
 
 export const smsManager = async (req: Request, res: Response) => {
+  const { sessionId, serviceCode, phoneNumber, text } = req.body;
+  console.log(text, sessionId, serviceCode, phoneNumber);
+
   let entry = `CON Welcome to the KESA SMS service
   1. Register Account
   2. Account Details
@@ -13,8 +16,6 @@ export const smsManager = async (req: Request, res: Response) => {
     if (req.method === "POST") {
       var pattern = /^[1][\*]([\a-z\s]){2,}\s\+\s([\a-z\s\w]){2,}?$/gim;
       //manager registration
-      const { sessionId, serviceCode, phoneNumber, text } = req.body;
-      console.log(text);
 
       let response = entry;
       res.send(response);
@@ -137,7 +138,11 @@ export const smsManager = async (req: Request, res: Response) => {
       res.set("Content-Type: text/plain");
       res.send(response);
     } else if (req.method === "GET") {
+      console.log("get");
       res.send(response);
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.send("END error");
+  }
 };

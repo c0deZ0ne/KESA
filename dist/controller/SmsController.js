@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.smsManager = void 0;
 const axios_1 = __importDefault(require("axios"));
 const smsManager = async (req, res) => {
+    const { sessionId, serviceCode, phoneNumber, text } = req.body;
+    console.log(text, sessionId, serviceCode, phoneNumber);
     let entry = `CON Welcome to the KESA SMS service
   1. Register Account
   2. Account Details
@@ -17,8 +19,6 @@ const smsManager = async (req, res) => {
         if (req.method === "POST") {
             var pattern = /^[1][\*]([\a-z\s]){2,}\s\+\s([\a-z\s\w]){2,}?$/gim;
             //manager registration
-            const { sessionId, serviceCode, phoneNumber, text } = req.body;
-            console.log(text);
             let response = entry;
             res.send(response);
             if (text == "") {
@@ -148,9 +148,13 @@ const smsManager = async (req, res) => {
             res.send(response);
         }
         else if (req.method === "GET") {
+            console.log("get");
             res.send(response);
         }
     }
-    catch (error) { }
+    catch (error) {
+        console.log(error);
+        res.send("END error");
+    }
 };
 exports.smsManager = smsManager;
