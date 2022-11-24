@@ -23,15 +23,35 @@ export const smsManager = async (req: Request, res: Response) => {
     //manager registration
 
     if (text == null || text == "" || text == undefined) {
+      let userIfo: any = await UserInstance.findOne({
+        where: { phone: phoneNumber },
+      });
+      if (userIfo) {
+        const { fullname } = userIfo;
+        entry = `CON  Welcome ${fullname} to the KESA SMS service 
+        10. Request for a professional
+        11. Account Details
+        12. Exit
+         `;
+         res.send(entry);
+      }else{
+        entry = `CON  Welcome to the KESA SMS service 
+        1. Register Account
+        2. Account Details
+        3. Request for a professional
+        4. Exit
+         `;
+         res.send(entry);
+      }
       // This is the first request. Note how we start the response with CON
-      res.send(response);
+      
     } else if (text == "1") {
       // Business logic for first level response
       response = `CON 
           Enter your full name + your location
         `;
       res.send(response);
-    } else if (text == "2") {
+    } else if (text == "2" || text == "11") {
       try {
         // res.send("CON Wait while we fetch your details");
 
@@ -39,7 +59,7 @@ export const smsManager = async (req: Request, res: Response) => {
           where: { phone: phoneNumber },
         });
         if (user) {
-          const status = `END Your account details are
+          const status = `END KESA Account details are
           Name: ${user.fullname}
           Location: ${user.address}
           Phone: ${user.phone}
@@ -52,7 +72,7 @@ export const smsManager = async (req: Request, res: Response) => {
       } catch (error) {
         console.log(error);
       }
-    } else if (text == "3") {
+    } else if (text == "3" || text == "10") {
       // Business logic for first level response
       // This is a terminal request. Note how we start the response with END
       response = `CON 
@@ -64,7 +84,7 @@ export const smsManager = async (req: Request, res: Response) => {
         5: Other
         `;
       res.send(response);
-    } else if (text == "4") {
+    } else if (text == "4" || text == "12") {
       const status = `END Thank you for using KESA SMS service`;
       res.send(status);
     } else if (text.match(pattern)) {
@@ -120,7 +140,7 @@ export const smsManager = async (req: Request, res: Response) => {
         }
         res.send(response);
       }
-    } else if (text == "3*1") {
+    } else if (text == "3*1" || text == "10*1") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `
       Please wait for a doctor to contact you
@@ -133,7 +153,7 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*2") {
+    } else if (text == "3*2"|| text == "10*2") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `Congrats! You have Matched here are the details
       name: Nurse Mary Doe,
@@ -144,7 +164,7 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*3") {
+    } else if (text == "3*3"|| text == "10*3") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `
       Congrats! You have Matched here are the details
@@ -156,14 +176,14 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*4") {
+    } else if (text == "3*4"|| text == "10*4") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `Please wait for a lab technician to contact you`;
       // This is a terminal request. Note how we start the response with END
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*5") {
+    } else if (text == "3*5"|| text == "10*5") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `Please wait for a professional to contact you`;
       // This is a terminal request. Note how we start the response with END
