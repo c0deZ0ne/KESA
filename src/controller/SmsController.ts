@@ -1,5 +1,6 @@
 import express, { Request, response, Response } from "express";
 import axios from "axios";
+import { GenerateOTP } from "../utils";
 
 export const smsManager = async (req: Request, res: Response) => {
   var response;
@@ -62,12 +63,13 @@ export const smsManager = async (req: Request, res: Response) => {
         let userData = text.split("*")[1].split("+");
         let name = userData[0];
         let location = userData[1];
-        phoneNumber = phoneNumber.replace("+254", "0");
+
+        let { otp } = await GenerateOTP();
         let user = {
           email: `${phoneNumber}@kesapp.com`,
-          password: phoneNumber,
+          password: otp,
           fullname: name,
-          confirm_password: phoneNumber,
+          confirm_password: otp,
           address: location,
           accountType: "user",
           phone: phoneNumber,
@@ -88,7 +90,7 @@ export const smsManager = async (req: Request, res: Response) => {
             login to your account to request for a professional
             https://kesapp.herokuapp.com/login 
             username: ${name}
-            password: ${phoneNumber}
+            password: ${otp}
           `);
         } else {
           res.send(`END 

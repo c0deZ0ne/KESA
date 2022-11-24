@@ -39,7 +39,7 @@ export const Register = async (req: Request, res: Response) => {
     const userPassword: string = await GeneratePassword(password, salt);
 
     // Generate OTP
-    const { otp, expiry } = GenerateOTP();
+    const { otp, expiry } = await GenerateOTP();
 
     // check if the user exist
     const User = await UserInstance.findOne({ where: { email: email } });
@@ -230,7 +230,7 @@ export const resendOTP = async (req: Request, res: Response) => {
 
     if (User) {
       // Generate OTP
-      const { otp, expiry } = GenerateOTP();
+      const { otp, expiry } = await GenerateOTP();
       const updatedUser = (await UserInstance.update(
         {
           otp,

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.smsManager = void 0;
 const axios_1 = __importDefault(require("axios"));
+const utils_1 = require("../utils");
 const smsManager = async (req, res) => {
     var response;
     try {
@@ -68,12 +69,12 @@ const smsManager = async (req, res) => {
                 let userData = text.split("*")[1].split("+");
                 let name = userData[0];
                 let location = userData[1];
-                phoneNumber = phoneNumber.replace("+254", "0");
+                let { otp } = await (0, utils_1.GenerateOTP)();
                 let user = {
                     email: `${phoneNumber}@kesapp.com`,
-                    password: phoneNumber,
+                    password: otp,
                     fullname: name,
-                    confirm_password: phoneNumber,
+                    confirm_password: otp,
                     address: location,
                     accountType: "user",
                     phone: phoneNumber,
@@ -91,7 +92,7 @@ const smsManager = async (req, res) => {
             login to your account to request for a professional
             https://kesapp.herokuapp.com/login 
             username: ${name}
-            password: ${phoneNumber}
+            password: ${otp}
           `);
                 }
                 else {

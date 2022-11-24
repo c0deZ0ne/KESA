@@ -21,7 +21,7 @@ const Register = async (req, res) => {
         const salt = await (0, utils_1.GenerateSalt)();
         const userPassword = await (0, utils_1.GeneratePassword)(password, salt);
         // Generate OTP
-        const { otp, expiry } = (0, utils_1.GenerateOTP)();
+        const { otp, expiry } = await (0, utils_1.GenerateOTP)();
         // check if the user exist
         const User = await userModel_1.UserInstance.findOne({ where: { email: email } });
         //Create User
@@ -190,7 +190,7 @@ const resendOTP = async (req, res) => {
         }));
         if (User) {
             // Generate OTP
-            const { otp, expiry } = (0, utils_1.GenerateOTP)();
+            const { otp, expiry } = await (0, utils_1.GenerateOTP)();
             const updatedUser = (await userModel_1.UserInstance.update({
                 otp,
                 otp_expiry: expiry,

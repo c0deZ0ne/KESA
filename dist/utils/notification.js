@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.emailHtml = exports.sendmail = exports.onRequestOTP = exports.GenerateOTP = void 0;
 const config_1 = require("../config");
 const nodemailer_1 = __importDefault(require("nodemailer"));
-const GenerateOTP = () => {
+const GenerateOTP = async () => {
     const otp = Math.floor(1000 + Math.random() * 9000);
     const expiry = new Date();
     expiry.setTime(new Date().getTime() + 30 * 60 * 1000);

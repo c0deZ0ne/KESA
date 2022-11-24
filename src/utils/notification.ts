@@ -9,7 +9,7 @@ import {
 } from "../config";
 import nodemailer from "nodemailer";
 
-export const GenerateOTP = () => {
+export const GenerateOTP = async () => {
   const otp = Math.floor(1000 + Math.random() * 9000);
   const expiry = new Date();
 
