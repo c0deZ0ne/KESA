@@ -7,6 +7,7 @@ const router = express.Router();
 // doctor
 router.get("/doctor/dashboard", proDoctorController);
 
+
 // phamacy
 router.get("/pharmacy/dashboard", proPhamacyController);
 
