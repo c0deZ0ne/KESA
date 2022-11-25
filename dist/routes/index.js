@@ -11,6 +11,9 @@ router.get("/", (req, res) => {
 router.get("/products", (req, res) => {
     res.render("product-list");
 });
+// router.get("/booking", (req, res) => {
+//   res.render("boo");
+// });
 router.get("/phamacy/pharmacy-search", (req, res) => {
     try {
         console.log("index");
@@ -25,7 +28,7 @@ router.get("/phamacy/details/:id", (req, res) => {
     res.render("pharmacy-details");
 });
 router.get("/register", (req, res) => {
-    console.log("registration");
+    // console.log("registration");
     res.render("register-form");
 });
 router.get("/login", (req, res) => {
