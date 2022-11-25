@@ -44,9 +44,10 @@
                     <div class="login-header">
                       <h3>Access <span> K E S A</span></h3>
                     </div>
-                    <form id="log-form" onsubmit="handleLoginFome(this)">
+                    <form id="login-form" onsubmit="handleLoginForm(this)">
                       <div class="form-group form-focus">
                         <input
+                          name="email"
                           onkeyup="handleChange(this)"
                           type="email"
                           class="form-control floating"
@@ -56,6 +57,7 @@
                       <div class="form-group form-focus">
                         <input
                           onkeyup="handleChange(this)"
+                          name="password"
                           type="password"
                           class="form-control floating"
                         />
@@ -69,7 +71,7 @@
                       <button
                         class="btn btn-primary w-100 btn-lg login-btn"
                         type="submit"
-                        onsubmit="handleLoginFome(this)"
+                        onclick="handleLoginForm(this)"
                       >
                         Login
                       </button>
@@ -117,6 +119,6 @@
     <script src="assets/js/feather.min.js"></script>
 
     <!-- <script src="assets/js/script.js"></script> -->
-    <script src="assets/script/index.js"></script>
+    <script src="/script/index.js"></script>
   </body>
 </html>

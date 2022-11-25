@@ -43,7 +43,7 @@
                       <h3 style="color: grey">Register Account</h3>
                     </div>
 
-                    <form class="reg-form">
+                    <form id="reg-form" onsubmit="(e)=>(e.preventDefault())">
                       <div class="form-group form-focus">
                         <input
                           onkeyup="handleChange(this)"
@@ -114,6 +114,7 @@
                       <button
                         class="btn btn-primary w-100 btn-lg login-btn"
                         type="submit"
+                        onclick="handleUserRegister(this)"
                       >
                         Signup
                       </button>

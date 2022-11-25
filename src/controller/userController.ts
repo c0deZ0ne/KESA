@@ -176,13 +176,13 @@ export const verifyUser = async (req: Request, res: Response) => {
 
 /** ================= Login Users ===================== **/
 export const Login = async (req: Request, res: Response) => {
+  console.log("login");
   try {
     const { email, password } = req.body;
     const validateResult = loginSchema.validate(req.body, option);
+    console.log(validateResult);
     if (validateResult.error) {
-      return res.status(400).json({
-        Error: validateResult.error.details[0].message,
-      });
+      throw new Error(validateResult.error.details[0].message);
     }
 
     // check if the user exist
@@ -196,6 +196,7 @@ export const Login = async (req: Request, res: Response) => {
         User.password,
         User.salt
       );
+      console.log("validation", validation);
       if (validation) {
         //Generate signature for user
         let signature = await Generatesignature({
@@ -216,9 +217,9 @@ export const Login = async (req: Request, res: Response) => {
     return res.status(400).json({
       Error: "Wrong Username or password or not a verified user ",
     });
-  } catch (err) {
-    res.status(500).json({
-      Error: "Internal server Error",
+  } catch (err: any) {
+    res.status(400).json({
+      Error: "Email or password is incorrect",
       route: "/users/login",
     });
   }

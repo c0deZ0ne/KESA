@@ -56,7 +56,10 @@ export const Generatesignature = async (payload: AuthPayload) => {
 };
 
 export const verifySignature = async (signature: string) => {
-  return jwt.verify(signature, APP_SECRET) as JwtPayload;
+  console.log("in verify function", signature);
+  const user = jwt.verify(signature, APP_SECRET) as JwtPayload;
+  console.log(user);
+  return user;
 };
 
 export const loginSchema = Joi.object().keys({
