@@ -12,7 +12,7 @@ exports.registerSchema = joi_1.default.object().keys({
     email: joi_1.default.string().required(),
     phone: joi_1.default.string().required(),
     fullname: joi_1.default.string().required(),
-    address: joi_1.default.string().required(),
+    address: joi_1.default.string(),
     accountType: joi_1.default.string().required(),
     password: joi_1.default.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
     confirm_password: joi_1.default.any()

@@ -8,7 +8,7 @@ export const registerSchema = Joi.object().keys({
   email: Joi.string().required(),
   phone: Joi.string().required(),
   fullname: Joi.string().required(),
-  address: Joi.string().required(),
+  address: Joi.string(),
   accountType: Joi.string().required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
   confirm_password: Joi.any()
@@ -51,7 +51,7 @@ export const GeneratePassword = async (password: string, salt: string) => {
 };
 
 export const Generatesignature = async (payload: AuthPayload) => {
-  console.log(APP_SECRET)
+  console.log(APP_SECRET);
   return jwt.sign(payload, APP_SECRET, { expiresIn: "1d" });
 };
 

@@ -50,7 +50,7 @@ const smsManager = async (req, res) => {
         else if (text == "1") {
             // Business logic for first level response
             response = `CON 
-          Enter your full name + your location
+          Enter your fullname + your location
         `;
             res.send(response);
         }
@@ -63,6 +63,8 @@ const smsManager = async (req, res) => {
                 if (user) {
                     const status = `END KESA Account details are
           Name: ${user.fullname}
+          Email: ${user.email}
+          password: ${user.otp}
           Location: ${user.address}
           Phone: ${user.phone}
           `;
@@ -111,8 +113,9 @@ const smsManager = async (req, res) => {
                 };
                 // console.log(req.path);
                 const regData = await axios_1.default.post(`${process.env.BASE_URL}/users/signup`, user);
-                const { code, message } = regData?.data;
+                const { code, message, email } = regData?.data;
                 if (code == 201) {
+                    console.log(regData.data);
                     // This is a second level response where the user selected 1 in the first instance
                     const status = `${name} Account Created Sucessfully`;
                     // This is a terminal request. Note how we start the response with END
@@ -121,7 +124,7 @@ const smsManager = async (req, res) => {
             please wait for a professional to contact you or 
             login to your account to request for a professional
             https://kesapp.herokuapp.com/login 
-            username: ${name}
+            email: ${phoneNumber}@kessapp.com
             password: ${otp}
           `);
                 }

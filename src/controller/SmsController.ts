@@ -33,22 +33,21 @@ export const smsManager = async (req: Request, res: Response) => {
         11. Account Details
         12. Exit
          `;
-         res.send(entry);
-      }else{
+        res.send(entry);
+      } else {
         entry = `CON  Welcome to the KESA SMS service 
         1. Register Account
         2. Account Details
         3. Request for a professional
         4. Exit
          `;
-         res.send(entry);
+        res.send(entry);
       }
       // This is the first request. Note how we start the response with CON
-      
     } else if (text == "1") {
       // Business logic for first level response
       response = `CON 
-          Enter your full name + your location
+          Enter your fullname + your location
         `;
       res.send(response);
     } else if (text == "2" || text == "11") {
@@ -61,6 +60,8 @@ export const smsManager = async (req: Request, res: Response) => {
         if (user) {
           const status = `END KESA Account details are
           Name: ${user.fullname}
+          Email: ${user.email}
+          password: ${user.otp}
           Location: ${user.address}
           Phone: ${user.phone}
           `;
@@ -108,8 +109,9 @@ export const smsManager = async (req: Request, res: Response) => {
           `${process.env.BASE_URL}/users/signup`,
           user
         );
-        const { code, message } = regData?.data;
+        const { code, message, email } = regData?.data;
         if (code == 201) {
+          console.log(regData.data);
           // This is a second level response where the user selected 1 in the first instance
           const status = `${name} Account Created Sucessfully`;
           // This is a terminal request. Note how we start the response with END
@@ -118,7 +120,7 @@ export const smsManager = async (req: Request, res: Response) => {
             please wait for a professional to contact you or 
             login to your account to request for a professional
             https://kesapp.herokuapp.com/login 
-            username: ${name}
+            email: ${phoneNumber}@kessapp.com
             password: ${otp}
           `);
         } else {
@@ -153,7 +155,7 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*2"|| text == "10*2") {
+    } else if (text == "3*2" || text == "10*2") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `Congrats! You have Matched here are the details
       name: Nurse Mary Doe,
@@ -164,7 +166,7 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*3"|| text == "10*3") {
+    } else if (text == "3*3" || text == "10*3") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `
       Congrats! You have Matched here are the details
@@ -176,14 +178,14 @@ export const smsManager = async (req: Request, res: Response) => {
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*4"|| text == "10*4") {
+    } else if (text == "3*4" || text == "10*4") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `Please wait for a lab technician to contact you`;
       // This is a terminal request. Note how we start the response with END
       res.send(`END 
         ${status}
         `);
-    } else if (text == "3*5"|| text == "10*5") {
+    } else if (text == "3*5" || text == "10*5") {
       // This is a second level response where the user selected 1 in the first instance
       const status = `Please wait for a professional to contact you`;
       // This is a terminal request. Note how we start the response with END

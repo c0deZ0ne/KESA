@@ -23,8 +23,15 @@ import { string } from "joi";
 /** ================= Register ===================== **/
 export const Register = async (req: Request, res: Response) => {
   try {
-    const {address, fullname, accountType, email, phone, password, confirm_password } =
-      req.body;
+    const {
+      address,
+      fullname,
+      accountType,
+      email,
+      phone,
+      password,
+      confirm_password,
+    } = req.body;
     const uuiduser = uuidv4();
     console.log(uuiduser);
     const validateResult = registerSchema.validate(req.body, option);
@@ -53,7 +60,7 @@ export const Register = async (req: Request, res: Response) => {
         accountType,
         password: userPassword,
         salt,
-        address: address,
+        address: address ? address : "",
         phone,
         otp,
         otp_expiry: expiry,

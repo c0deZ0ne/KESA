@@ -183,13 +183,8 @@ function updateHandlerChange(e, id) {
 // }
 
 const handleOtpSubmit = async () => {
-  //   alert("otp submited");
-  //make fetch request to backned
-//   console.log(data);
-
   try {
     //verify OTP
-
     const signature = window.localStorage.getItem("signature");
     let respose = await fetch(`/users/verify/${signature}`, {
       method: "POST",
@@ -202,18 +197,16 @@ const handleOtpSubmit = async () => {
     if (Error) {
       return alert(Error);
     } else {
-        alert(message)
+      alert(message);
       window.location.replace("/login");
     }
   } catch (error) {}
-
-  //   try {
-  //     const { code, message, user } = await respose.json();
-  //     //set cookie / authorisation
-  //     // console.log(code, message, user);
-
-  //     if (code == 200) {
-  //       localStorage.setItem("user", JSON.stringify(user));
-  //       location.replace("/user/dashboard");
-  //     }
 };
+
+const handleLoginFome = async (e) => {
+  e.preventDefault();
+  console.log(" form submited ");
+  console.log(data);
+};
+
+window.alert("hello world");
