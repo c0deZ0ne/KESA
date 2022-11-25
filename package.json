@@ -1,7 +1,7 @@
 {
-  "name": "sq12-food-app",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "kesapp",
+  "version": "1",
+  "main": "src/app.ts",
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/app.ts",
@@ -45,5 +45,8 @@
     "twilio": "^3.83.2",
     "typescript": "^4.8.4",
     "uuid": "^9.0.0"
-  }
+  },
+  "description": "an application that connect health specialist to patient anywhere in the world",
+  "repository": "https://github.com/c0deZ0ne/KESA.git",
+  "author": "dogubo mamuzo joshua <dogubo.joshua@decagon.dev>"
 }
