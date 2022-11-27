@@ -11,6 +11,7 @@ import { db } from "./config/index";
 import professionalRoute from "./routes/professionalRoute";
 import smsRouter from "./routes/SmsRoute";
 import patientRoute from "./routes/patientRoute";
+import adminRoute from "./routes/adminRoute";
 // Sequelize connection
 db.sync({ force: false })
   .then(() => {
@@ -36,7 +37,8 @@ app.use("/users", userRouter);
 // app.use("/admins", adminRouter);
 app.use("/search-doctors", searchDoctors);
 app.use("/pharmacy", pharmacyRoute);
-app.use('/patient', patientRoute);
+app.use("/patient", patientRoute);
+app.use("/admin", adminRoute);
 // pro route
 app.use("/pro", professionalRoute);
 

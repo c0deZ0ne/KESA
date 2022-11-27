@@ -14,11 +14,11 @@ import {
   loginSchema,
   validatePassword,
   updateSchema,
+  sendOtp,
 } from "../utils";
 import { FromAdminMail, userSubject } from "../config";
 import { UserAttributes, UserInstance } from "../model/userModel";
 import { v4 as uuidv4 } from "uuid";
-import { string } from "joi";
 
 /** ================= Register ===================== **/
 export const Register = async (req: Request, res: Response) => {
@@ -33,7 +33,6 @@ export const Register = async (req: Request, res: Response) => {
       confirm_password,
     } = req.body;
     const uuiduser = uuidv4();
-    console.log(uuiduser);
     const validateResult = registerSchema.validate(req.body, option);
     if (validateResult.error) {
       return res.status(400).json({
@@ -53,64 +52,66 @@ export const Register = async (req: Request, res: Response) => {
 
     //Create User
     if (!User) {
-      await UserInstance.create({
-        id: uuiduser,
-        email,
-        fullname: fullname,
-        accountType,
-        password: userPassword,
-        salt,
-        address: address ? address : "",
-        phone,
-        otp,
-        otp_expiry: expiry,
-        lng: 0,
-        lat: 0,
-        verified: false,
-        role: "user",
-      });
+      try {
+        let status = await sendOtp(phone, otp, "sms");
+        console.log(status);
+        if (status) {
+          await UserInstance.create({
+            id: uuiduser,
+            email,
+            fullname: fullname,
+            accountType,
+            password: userPassword,
+            salt,
+            address: address ? address : "",
+            phone,
+            otp,
+            otp_expiry: expiry,
+            lng: 0,
+            lat: 0,
+            verified: false,
+            role: "user",
+          });
+          // check if the user exist
+          const User = (await UserInstance.findOne({
+            where: { email: email },
+          })) as unknown as UserAttributes;
 
-      // Send Otp to user
+          //Generate signature for user
+          let signature = await Generatesignature({
+            id: User.id,
+            email: User.email,
+            verified: User.verified,
+          });
 
-      // try {
-      //   await onRequestOTP(otp, phone);
-      // } catch (error) {
-      //   console.log(error);
-      // }
-
-      //Send Mail to user
-      // const html = emailHtml(otp);
-      // await sendmail(FromAdminMail, email, userSubject, html);
-
-      // check if the user exist
-      const User = (await UserInstance.findOne({
-        where: { email: email },
-      })) as unknown as UserAttributes;
-
-      //Generate signature for user
-      let signature = await Generatesignature({
-        id: User.id,
-        email: User.email,
-        verified: User.verified,
-      });
-
-      return res.status(201).json({
-        code: 201,
-        message:
-          "User created successfully check your email or phone for OTP verification",
-        signature,
-        verified: User.verified,
-      });
+          return res.status(201).json({
+            code: 201,
+            message:
+              "User created successfully check your email or phone for OTP verification",
+            signature,
+            verified: User.verified,
+          });
+        }
+        return res.status(400).json({
+          Error: "Phone number is not valid",
+          code: 400,
+        });
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          Error: "Please retry with valid credentials",
+          code: 500,
+        });
+      }
     }
     return res.status(400).json({
       Error: "User already exist",
-      code: 400,
     });
-  } catch (err: any) {
-    console.log(err.message);
-    res.status(500).json({
-      Error: "Internal server Error",
-      route: "/users/signup",
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      Error: "Internal server error",
+      code: 500,
     });
   }
 };
@@ -196,13 +197,13 @@ export const Login = async (req: Request, res: Response) => {
         User.password,
         User.salt
       );
-      console.log("validation", validation);
       if (validation) {
         //Generate signature for user
         let signature = await Generatesignature({
           id: User.id,
           email: User.email,
           verified: User.verified,
+          accountType: User.accountType,
         });
 
         return res.status(200).json({
@@ -211,6 +212,7 @@ export const Login = async (req: Request, res: Response) => {
           email: User.email,
           verified: User.verified,
           role: User.role,
+          accountType: User.accountType,
         });
       }
     }

@@ -12,4 +12,8 @@ router.get("/", (req: Request, res: Response) => {
 router.get("/details/:id", (req, res) => {
   res.render("pharmacy-details");
 });
+
+router.get("/admin-dashboard", (req, res) => {
+  res.render("pharmacy-admin");
+});
 export default router;

@@ -6,7 +6,13 @@ import {
   GMAIL_PASS,
   FromAdminMail,
   userSubject,
+  server_email,
+  server_password,
+  adminPhone,
+  WHATSAPP_ACCOUNT_PHONE,
 } from "../config";
+import dotenv from "dotenv";
+dotenv.config();
 import nodemailer from "nodemailer";
 
 export const GenerateOTP = async () => {
@@ -26,6 +32,22 @@ export const onRequestOTP = async (otp: number, toPhoneNumber: string) => {
     from: fromAdminPhone,
   });
   return response;
+};
+
+export const sendOtp = async (phone: string, otp: number, layer: string) => {
+  try {
+    const client = require("twilio")(accountSid, authToken);
+    let rs = await client.messages.create({
+      body: `Your OTP is ${otp}`,
+      from: !(layer == "sms")
+        ? `whatsapp:${WHATSAPP_ACCOUNT_PHONE}`
+        : adminPhone,
+      to: !(layer == "sms") ? `whatsapp:${phone}` : phone,
+    });
+    return rs;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 let transport = nodemailer.createTransport({
@@ -58,15 +80,14 @@ export const sendmail = async (
   }
 };
 
-export const emailHtml = (otp:number):string=>{
-   const temp= `
+export const emailHtml = (otp: number): string => {
+  const temp = `
      <div style="max-width:700px;font-size:110%; border:10px solid #ddd; padding:50px 20px; margin:auto;">
      <h2 style="text-transform:uppercase; text-align:center; color:teal;">
       Welcome to Food Kosi store
      </h2>
      <p>Hi there, your otp is ${otp}, it will expire in 30mins</p>
      </div>
-   `
-   return temp;
-}
-
+   `;
+  return temp;
+};

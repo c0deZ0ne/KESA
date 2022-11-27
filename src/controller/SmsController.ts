@@ -101,7 +101,7 @@ export const smsManager = async (req: Request, res: Response) => {
           fullname: name,
           confirm_password: String(otp),
           address: location,
-          accountType: "user",
+          accountType: "Patient",
           phone: phoneNumber,
         };
         // console.log(req.path);

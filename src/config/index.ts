@@ -8,8 +8,8 @@ export const db = new Sequelize("app", "", "", {
   logging: false,
 });
 
-export const accountSid = process.env.AccountSID;
-export const authToken = process.env.AuthToken;
+// export const accountSid = process.env.AccountSID;
+// export const authToken = process.env.AuthToken;
 
 export const fromAdminPhone = process.env.fromAdminPhone;
 
@@ -17,5 +17,11 @@ export const GMAIL_USER = process.env.GMAIL_USER;
 export const GMAIL_PASS = process.env.GMAIL_PASS;
 export const FromAdminMail = process.env.FromAdminMail as string;
 export const userSubject = process.env.userSubject!;
+export const accountSid = process.env.TWILIO_ACCOUNT_SID;
+export const authToken = process.env.TWILIO_AUTH_TOKEN;
+export const adminPhone = process.env.TWILIO_ADMINPHONE_NUMBER;
+export const server_email = process.env.EMAIL;
+export const WHATSAPP_ACCOUNT_PHONE = process.env.WHATSAPP_ACCOUNT_PHONE;
+export const server_password = process.env.PASSWORD;
 
 export const APP_SECRET = process.env.APP_SECRET!;

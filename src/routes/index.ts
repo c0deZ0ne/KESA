@@ -58,11 +58,13 @@ router.get("/otp", (req, res) => {
 router.get("/contact-us", (req, res) => {
   res.render("contact-us");
 });
-router.get("/doctor-dashboard", (req, res) => {
+
+router.get("doctors/dashboard", (req, res) => {
   res.render("doctor-dashboard");
 });
 
 router.get("/doctor-profile-settings", (req, res) => {
   res.render("doctor-profile-settings");
 });
+
 export default router;
